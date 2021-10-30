@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styles from './App.module.css';
-import getWeb3 from './getWeb3.js';
+import getWeb3 from './utils/getWeb3.js';
 import PasswordManager from './contracts/PasswordManager.json';
+import Landing from './components/Landing.jsx';
+import Dashboard from './components/Dashboard.jsx';
 
 const App = () => {
   const [accounts, setAccounts] = useState(null);
@@ -30,23 +33,26 @@ const App = () => {
     connectWallet();
   }, []);
 
-  const runCheck = async () => {
-    const greet = await instance.methods.greet().call({ from: accounts[0] });
-    console.log(greet);
-  }
-
 
   return (
     <div className={styles['app']}>
-      <h1>Good to Go!</h1>
-      <p>Your Truffle Box is installed and ready 💪.</p>
-      <button
-        onClick={async (e) => {
-          e.preventDefault();
-          await runCheck();
-        }}>
-        Test contract
-      </button>
+      <Router>
+        <h1>dApp Password Manager</h1>
+        <Switch>
+          <Route path="/" exact>
+            <Landing
+              contract={instance}
+              addresses={accounts}
+            />
+          </Route>
+          <Route path="/dashboard">
+            <Dashboard
+              contract={instance}
+              addresses={accounts}
+            />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
