@@ -12,7 +12,7 @@ contract PasswordManager {
 
   constructor() {}
 
-  function setSecretKey(string memory _secretKey) 
+  function storeSecretKey(string memory _secretKey) 
     public 
   {
     userSecretKey[msg.sender] = _secretKey;
