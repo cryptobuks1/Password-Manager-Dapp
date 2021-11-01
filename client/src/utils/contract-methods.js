@@ -64,3 +64,35 @@ export const savePassword = async (contractInstance, addr, details) => {
     }
   }
 }
+
+
+
+/**
+ * @param {object} contractInstance - a loaded instance of the smart contract
+ * @param {string} addr - eth address
+ * @param {string} secretKey
+ * @returns {object}
+ */
+export const getPasswords = async (contractInstance, addr, secretKey) => {
+  if (secretKey.trim().length >= 6) {
+    try {
+      const res = await contractInstance.methods.getPasswords(secretKey).call({ 'from': addr });
+      return {
+        'success': true,
+        'result': res
+      }
+    }
+    catch(err) {
+      return {
+        'success': false,
+        'error': err
+      }
+    }
+  }
+  else {
+    return {
+      'success': false,
+      'error': 'Invalid key - must be at lest 6 letters ❗'
+    }
+  }
+}

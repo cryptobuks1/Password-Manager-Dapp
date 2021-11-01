@@ -3,6 +3,7 @@ import styles from './Dashboard.module.css';
 import { Link } from 'react-router-dom';
 import StoreSecretKey from './StoreSecretKey.jsx';
 import SavePassword from './SavePassword.jsx';
+import GetPasswords from './GetPasswords.jsx';
 
 const Dashboard = (props) => {
   return (
@@ -13,6 +14,10 @@ const Dashboard = (props) => {
         addresses={props.addresses}
       />
       <SavePassword
+        contract={props.contract}
+        addresses={props.addresses}
+      />
+      <GetPasswords
         contract={props.contract}
         addresses={props.addresses}
       />
